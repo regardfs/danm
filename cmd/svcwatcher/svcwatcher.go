@@ -62,8 +62,8 @@ func main() {
 	run := func(stopCh <-chan struct{}) {
 		go kubeInformerFactory.Start(stopCh)
 		go danmInformerFactory.Start(stopCh)
-
-		if err = controller.Run(10, stopCh); err != nil {
+    //TODO: parallel update is not yet handled internally, so don't increase the number of running worker threads above 1
+		if err = controller.Run(1, stopCh); err != nil {
 			glog.Fatalf("Error running controller: %s", err.Error())
 		}
 	}
